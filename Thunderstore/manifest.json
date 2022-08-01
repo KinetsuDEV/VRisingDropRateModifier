@@ -1,0 +1,10 @@
+{
+    "name": "DropRateModifier",
+    "version_number": "1.0.0",
+    "website_url": "https://github.com/KinetsuDEV/VRisingDropRateModifier",
+    "description": "Drop rate mod for V Rising",
+    "dependencies": [
+      "BepInEx-BepInExPack_V_Rising-1.0.0",
+      "molenzwiebel-Wetstone-1.1.0"
+    ]
+  }
