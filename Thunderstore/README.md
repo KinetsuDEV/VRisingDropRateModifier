@@ -1,7 +1,8 @@
 # DropRateModifier
 `Server side only` mod to change drop rate.
 
-What is the difference between `DropTableModifier_General` native server configuration and `DropRateModifier` mod configuration:
+What is the difference between `DropTableModifier_General` native server configuration and `DropRateModifier` mod configuration?
+
 ![alt text](https://github.com/KinetsuDEV/VRisingDropRateModifier/blob/main/Thunderstore/drop-settings-comparison.png?raw=true)
 
 ## Installation

@@ -13,7 +13,10 @@ namespace DropRateModifier.Systems
     {
         internal static void ChangeDropRate()
         {
-            Plugin.Logger.LogInfo($"Changing drop rate modifier: {DropRateConfig.DropRateModifier.Value}");
+            if (DropRateConfig.DropRateModifier.Value == 1.0f)
+                return;
+
+            Plugin.Logger.LogInfo($"Changing drop rate values. Modifier: {DropRateConfig.DropRateModifier.Value}");
 
             foreach (var dropTable in GetEntitiesDropTables())
             {

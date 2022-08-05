@@ -14,7 +14,7 @@ namespace DropRateModifier
     {
         private const string PLUGIN_GUID = "DropRateModifier";
         private const string PLUGIN_NAME = "DropRateModifier";
-        private const string PLUGIN_VERSION = "1.0.0";
+        private const string PLUGIN_VERSION = "1.0.2";
         private Harmony harmony;
 
         internal static ManualLogSource Logger { get; private set; }
