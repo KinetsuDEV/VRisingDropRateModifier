@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.Collections;
 using Unity.Entities;
-using Wetstone.API;
+using VRisingUtils.Utils;
 
 namespace DropRateModifier.Systems
 {
@@ -16,16 +16,16 @@ namespace DropRateModifier.Systems
             if (DropRateConfig.DropRateModifier.Value == 1.0f)
                 return;
 
-            Plugin.Logger.LogInfo($"Changing drop rate values. Modifier: {DropRateConfig.DropRateModifier.Value}");
+            LogUtils.Logger.LogInfo($"Changing drop rate values. Modifier: {DropRateConfig.DropRateModifier.Value}");
 
             foreach (var dropTable in GetEntitiesDropTables())
             {
-                var dropTableEntity = VWorld.Server.GetExistingSystem<PrefabCollectionSystem>().PrefabLookupMap[dropTable.DropTableGuid];
+                var dropTableEntity = WetstoneUtils.PrefabLookupMap[dropTable.DropTableGuid];
 
-                if (!VWorld.Server.EntityManager.HasComponent<DropTableDataBuffer>(dropTableEntity))
+                if (!WetstoneUtils.EntityManager.HasComponent<DropTableDataBuffer>(dropTableEntity))
                     continue;
 
-                var buffer = VWorld.Server.EntityManager.GetBuffer<DropTableDataBuffer>(dropTableEntity);
+                var buffer = WetstoneUtils.EntityManager.GetBuffer<DropTableDataBuffer>(dropTableEntity);
                 var newBuffer = new List<DropTableDataBuffer>();
 
                 foreach (var dropTableData in buffer)
@@ -43,20 +43,20 @@ namespace DropRateModifier.Systems
                     buffer.Add(dropTableData);
             }
 
-            Plugin.Logger.LogInfo($"Drop rate values changed successfully");
+            LogUtils.Logger.LogInfo($"Drop rate values changed successfully");
         }
 
         private static IList<DropTableBuffer> GetEntitiesDropTables()
         {
             var result = new List<DropTableBuffer>();
-            var entities = VWorld.Server.EntityManager.CreateEntityQuery(new EntityQueryDesc()
+            var entities = WetstoneUtils.EntityManager.CreateEntityQuery(new EntityQueryDesc()
             {
                 All = new ComponentType[] { ComponentType.ReadOnly<DropTableBuffer>() },
                 Options = EntityQueryOptions.IncludeAll
             }).ToEntityArray(Allocator.Temp);
 
             foreach (var entity in entities)
-                foreach (var dropTable in VWorld.Server.EntityManager.GetBuffer<DropTableBuffer>(entity))
+                foreach (var dropTable in WetstoneUtils.EntityManager.GetBuffer<DropTableBuffer>(entity))
                     if (!result.Any(r => r.DropTableGuid == dropTable.DropTableGuid))
                         result.Add(dropTable);
 

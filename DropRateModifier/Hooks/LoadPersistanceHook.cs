@@ -2,6 +2,7 @@
 using HarmonyLib;
 using ProjectM;
 using System;
+using VRisingUtils.Utils;
 
 namespace DropRateModifier.Hooks
 {
@@ -19,7 +20,7 @@ namespace DropRateModifier.Hooks
             }
             catch (Exception e)
             {
-                Plugin.Logger.LogError(e);
+                LogUtils.Logger.LogError(e);
             }
         }
     }

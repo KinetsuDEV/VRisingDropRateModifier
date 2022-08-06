@@ -1,39 +1,34 @@
 ﻿using BepInEx;
 using BepInEx.IL2CPP;
-using BepInEx.Logging;
 using DropRateModifier.Configs;
 using HarmonyLib;
 using System.Reflection;
+using VRisingUtils.Utils;
 using Wetstone.API;
 
 namespace DropRateModifier
 {
-    [BepInPlugin(PLUGIN_GUID, PLUGIN_NAME, PLUGIN_VERSION)]
+    [BepInPlugin(PluginInfo.PLUGIN_GUID, PluginInfo.PLUGIN_NAME, PluginInfo.PLUGIN_VERSION)]
     [BepInDependency("xyz.molenzwiebel.wetstone")]
     public class Plugin : BasePlugin
     {
-        private const string PLUGIN_GUID = "DropRateModifier";
-        private const string PLUGIN_NAME = "DropRateModifier";
-        private const string PLUGIN_VERSION = "1.0.2";
         private Harmony harmony;
-
-        internal static ManualLogSource Logger { get; private set; }
 
         public override void Load()
         {
             if (!VWorld.IsServer)
             {
-                Log.LogWarning($"Plugin {PLUGIN_NAME} is server side only");
+                Log.LogWarning($"Plugin {PluginInfo.PLUGIN_NAME} is server side only");
                 return;
             }
 
-            Logger = Log;
+            LogUtils.Initialize(Log);
             DropRateConfig.Initialize(Config);
 
-            harmony = new Harmony(PLUGIN_GUID);
+            harmony = new Harmony(PluginInfo.PLUGIN_GUID);
             harmony.PatchAll(Assembly.GetExecutingAssembly());
 
-            Log.LogInfo($"Plugin {PLUGIN_NAME} {PLUGIN_VERSION} loaded successfully!");
+            Log.LogInfo($"Plugin {PluginInfo.PLUGIN_NAME} {PluginInfo.PLUGIN_VERSION} loaded successfully!");
         }
 
         public override bool Unload()
